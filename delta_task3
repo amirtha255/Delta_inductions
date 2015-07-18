@@ -1,0 +1,37 @@
+
+<?php
+echo "welcome to my website";
+    $ipaddress = '';
+    if (getenv('HTTP_CLIENT_IP'))
+        $ipaddress = getenv('HTTP_CLIENT_IP');
+    else if(getenv('HTTP_X_FORWARDED_FOR'))
+        $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+    else if(getenv('HTTP_X_FORWARDED'))
+        $ipaddress = getenv('HTTP_X_FORWARDED');
+    else if(getenv('HTTP_FORWARDED_FOR'))
+        $ipaddress = getenv('HTTP_FORWARDED_FOR');
+    else if(getenv('HTTP_FORWARDED'))
+       $ipaddress = getenv('HTTP_FORWARDED');
+    else if(getenv('REMOTE_ADDR'))
+        $ipaddress = getenv('REMOTE_ADDR');
+    else
+        $ipaddress = 'UNKNOWN';
+   
+$ip_addr=$ipaddress;
+try{
+$con = new PDO('mysql:host=localhost;dbname=delta;charset=utf8', 'root', 'varsha97');
+$stmt=$con->prepare("INSERT INTO ngrok(ip_addr)VALUES(:ip_addr)");
+$stmt->execute(array(':ip_addr'=>$ip_addr));
+	$st = $con->query('SELECT * FROM ngrok');
+	$row_count = $st->rowCount();
+	echo "THE NUMBER OF HITS ARE ".$row_count;
+	//$st->setFetchMode(PDO::FETCH_ASSOC);
+	//$results = $st->fetchAll(PDO::FETCH_ASSOC);
+	while($row = $st->fetch(PDO::FETCH_ASSOC)) {
+    echo "<br/>hit".$row['hits'].'<br/>'.'ip address'.$row['ip_addr']; //etc...
+}
+}
+catch(PDOexception $ex){
+echo "error";
+}
+?>

@@ -1,0 +1,22 @@
+#!/bin/bash
+i=1;
+n=5;
+read c;
+echo "$c";
+cd $c;
+a=""
+ while [ $i -le $n ]; do
+if ["$i" = "1"]; then
+ sudo mkdir -p "$c/fold1"
+else
+ a=""$c"/fold$i"
+ mkdir -p $a
+fi
+
+  touch $a/"foldr$i".txt
+chmod 700 ./$a
+chmod 700 ./"foldr$i".txt
+#rmdir "folderr$i"
+#rm "folderr$i".txt 
+i=`expr "$i" + 1`
+done

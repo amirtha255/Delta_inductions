@@ -1,0 +1,29 @@
+#!/usr/bin/python
+import sys
+from crontab import CronTab
+a = raw_input("enter qualified location")
+b=open(a+'/scrr1.py','w')
+b.write("""#!/usr/bin/env python
+import MySQLdb as m
+con=m.connect(user="newuser",passwd="new123");
+cur=con.cursor()
+cur.execute("CREATE DATABASE test5;")
+db = m.connect("localhost","newuser","new123","test5" )
+cor=db.cursor()
+query="CREATE TABLE table2 (timecol time NOT NULL);"
+cor.execute(query)""")
+c=open(a+"/scrr2.py",'w')
+c.write("""#!/usr/bin/env python
+import MySQLdb as m
+db = m.connect("localhost","newuser","new123","test5" )
+cor=db.cursor()
+query="insert into table2(timecol) values(now());"
+cor.execute(query)""")
+b.close()
+c.close()
+system_cron   = CronTab()
+job=system_cron.new(command='/usr/bin/python'+""+ a+'/scr2.py' )
+#job.every.minute(5)
+job.minute.during(0,59).every(10)
+system_cron.write()
+#this script is placed in the python-crontab directory

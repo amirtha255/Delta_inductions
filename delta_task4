@@ -1,0 +1,5 @@
+#!/bin/bash
+#The script is placed in the same directory as the log file access.txt
+grep -Eo  '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' access.txt | sort | uniq -c | sort -nr
+grep -Eo "[[:space:]][1-5][0-1][0-8][[:space:]]" access.txt | sort | uniq -c | sort -nr
+

@@ -19,7 +19,7 @@ echo "welcome to my website";
    
 $ip_addr=$ipaddress;
 try{
-$con = new PDO('mysql:host=localhost;dbname=delta;charset=utf8', 'root', 'varsha97');
+$con = new PDO('mysql:host=localhost;dbname=delta;charset=utf8', 'root', 'root123');
 $stmt=$con->prepare("INSERT INTO ngrok(ip_addr)VALUES(:ip_addr)");
 $stmt->execute(array(':ip_addr'=>$ip_addr));
 	$st = $con->query('SELECT * FROM ngrok');
